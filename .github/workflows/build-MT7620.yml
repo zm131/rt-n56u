@@ -36,7 +36,7 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: "NEWIFI-MINI YK-L1 PSG1218"
+        TNAME: "PSG1218"
       run: |
         cwd=`pwd`
         CONFIG_TOOLCHAIN_DIR=${cwd//\//\\\/}\\/toolchain-mipsel
@@ -89,14 +89,6 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=n" >> .config #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=n" >> .config #zerotier ~1.3M
         ####################################################################################
-        #if [ "$m" = "PSG1208" ] || [ "$m" = "PSG1218" ] || [ "$m" = "PSG712" ]; then
-        #sed -i '/CONFIG_FIRMWARE_INCLUDE_TTYD/d' .config
-        #sed -i '/CONFIG_FIRMWARE_INCLUDE_ALIDDNS/d' .config
-        #echo "CONFIG_FIRMWARE_INCLUDE_TTYD=n" >> .config
-        #echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=n" >> .config
-        #echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=n" >> .config
-        #echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=n" >> .config
-        #fi
         sed -i "s/^CONFIG_TOOLCHAIN_DIR=.*$/CONFIG_TOOLCHAIN_DIR=${CONFIG_TOOLCHAIN_DIR}/g" .config
         sudo ./clear_tree_simple
         sudo ./build_firmware_modify $m 0
